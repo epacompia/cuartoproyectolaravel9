@@ -2,6 +2,6 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/posts', function(){
-    return "Hola mundo";
-})->name('posts.index');  //AQUI AGREGO MIDDLEWARE PARA PROTEGER LA RUTA QUE NADIE QUE NO ESTE AUTENTICADO ACCEDA POR ESO PONGO auth
+Route::get('/', function(){
+    return view('admin.dashboard');
+})->name('dashboard');  //AQUI AGREGO MIDDLEWARE PARA PROTEGER LA RUTA QUE NADIE QUE NO ESTE AUTENTICADO ACCEDA POR ESO PONGO auth
