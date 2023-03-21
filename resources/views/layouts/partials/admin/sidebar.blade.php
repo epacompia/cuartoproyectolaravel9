@@ -3,16 +3,16 @@ class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-f
 aria-label="Sidebar">
 <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
     <h2 class="text-3xl font-semibold mb-6 text-blue-700">
-        <a href="/">Edu</a>    
+        <a href="/">Edu</a>
     </h2>
-    
+
     <ul class="space-y-2">
         @foreach ($links as $link)
-            
-        
+
+
         <li>
             <a href="{{ $link['url'] }}"
-                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 {{ $link['active'] ? 'bg-gray-200' : ''}}">
+                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 {{ $link['active'] ? 'bg-gray-300' : ''}}">
                 {{-- <svg aria-hidden="true"
                     class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@ aria-label="Sidebar">
                 <span class="ml-3">{{ $link['title'] }}</span>
             </a>
         </li>
-        
+
 
         @endforeach
     </ul>

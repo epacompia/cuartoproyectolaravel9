@@ -21,18 +21,25 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased bg-gray-50 text-gray-700">
     <x-banner />
 
     @php
-        $links = [[
-        'title' => 'Dashboard',
-        'url' => route('admin.dashboard'),
-        'active' => request()->routeIs('admin.dashboard'),
-        'icon' =>'fa-solid fa-gauge-high'
-],
+        $links = [
+            [
+                'title' => 'Dashboard',
+                'url' => route('admin.dashboard'),
+                'active' => request()->routeIs('admin.dashboard'),
+                'icon' =>'fa-solid fa-gauge-high'
+            ],
+            [
+                'title' => 'Posts',
+                'url' => route('admin.posts.index'),
+                'active' => request()->routeIs('admin.posts.*'),
+                'icon' =>'fa-solid fa-blog'
+            ],
         ];
-         
+
     @endphp
 
     <div class="flex" x-data="{
@@ -47,16 +54,16 @@
 
 
 
-            
+
             @include('layouts.partials.admin.sidebar')
 
-           
+
 
         </div>
         <div class="flex-1">
             @include('layouts.partials.admin.navigation')
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {{ $slot }}
             </div>
         </div>

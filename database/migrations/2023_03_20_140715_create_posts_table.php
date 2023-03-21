@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+
+            $table->text('summary');
+
+
             $table->longText('content');
             $table->string('image_url')->nullable();
 
