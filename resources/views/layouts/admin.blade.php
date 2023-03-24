@@ -21,6 +21,17 @@
     @livewireStyles
 </head>
 
+
+
+<x-banner />
+
+
+
+
+
+
+
+
 <body class="font-sans antialiased bg-gray-50 text-gray-700">
     <x-banner />
 

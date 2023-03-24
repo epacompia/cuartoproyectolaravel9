@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 
@@ -17,8 +19,11 @@ class PostController extends Controller
      */
     public function index()
     {
+
         //return auth()->user();
-        $posts=Post::where('user_id', auth()->id())->paginate(5); //aqui le digo que retorne los registros del usuario autenticado
+        $posts=Post::where('user_id', auth()->id())
+                        ->orderBy('id', 'desc')
+                        ->paginate(5); //aqui le digo que retorne los registros del usuario autenticado
         //return $posts;
         return view('admin.posts.index', compact('posts'));
     }
@@ -30,7 +35,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories=Category::all();
+        return view('admin.posts.create',compact('categories'));
     }
 
     /**
@@ -41,7 +47,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'title' =>'required|string|max:255',
+            'category_id' =>'required|integer|exists:categories,id',
+        ]);
+
+
+
+        $post=Post::create([
+            'title'=>$request->title,
+            'slug' =>Str::slug($request->title),
+            'category_id'=>$request->category_id,
+            'user_id'=>auth()->id(),
+        ]);
+
+
+        //aqui estoy es para implementar un banner pra que aparesca cuando se guarde el registro
+        session()->flash('flash.banner', 'El Post se ha creado con exito');
+        session()->flash('flash.bannerStyle', 'success');
+
+
+        return redirect()->route('admin.posts.edit',$post);
     }
 
     /**

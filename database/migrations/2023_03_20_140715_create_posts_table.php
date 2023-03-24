@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
 
-            $table->text('summary');
+            $table->text('summary')->nullable();
 
 
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->string('image_url')->nullable();
 
             $table->boolean('is_published')->default(false);
