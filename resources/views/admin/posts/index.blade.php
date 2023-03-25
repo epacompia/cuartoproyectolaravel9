@@ -12,7 +12,7 @@
         <li class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             <figure>
                 <a href="{{route('admin.posts.edit',$post)}}">
-                    <img class="aspect-[16/9] object-cover object-center w-full" src="{{$post->image_url}}" alt="{{$post->title}}">
+                    <img class="aspect-[16/9] object-cover object-center w-full" src="{{$post->image}}" alt="{{$post->title}}">
                 </a>
             </figure>
             <div class="text-xl font-semibold">

@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+//PARA TRABAJAR CON ACCESSORES
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Post extends Model
 {
     use HasFactory;
@@ -20,6 +24,24 @@ class Post extends Model
         'user_id',
         'published_at',
     ];
+
+
+//MPLEMENTACION DE MI accesores aplicado a title (ESTO HACE QUE TODO EL TITLO SE VUELVA A MAYUSCULA)
+    public function title():Attribute{
+        return new Attribute(
+            get: function($value){
+                return strtoupper($value);
+            }
+        );
+    }
+
+    public function image():Attribute{
+        return new Attribute(
+            get: function(){
+                return $this->image_url ?? 'https://seeklogo.com/images/E/ESCUDO_POLICIA_NACIONAL_DEL_PERU-logo-E874C71F6F-seeklogo.com.png';
+            }
+        );
+    }
 
 
     //RELACION UNO A MUCOHOS INVERSA Post - User

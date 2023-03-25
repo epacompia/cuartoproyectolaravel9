@@ -51,16 +51,22 @@ class PostController extends Controller
         $request->validate([
             'title' =>'required|string|max:255',
             'category_id' =>'required|integer|exists:categories,id',
+            'slug' => 'required|string|max:255|unique:posts',
         ]);
 
 
-
+/*FORMA 1
         $post=Post::create([
             'title'=>$request->title,
-            'slug' =>Str::slug($request->title),
+            //'slug' =>Str::slug($request->title), //Lo comento ya que lo tengo este campo en los observer
             'category_id'=>$request->category_id,
-            'user_id'=>auth()->id(),
+            //'user_id'=>auth()->id(), //tambien usado ya en el observer
         ]);
+
+*/
+
+//FORMA 2
+        $post=Post::create($request->all());  //AQUI GUARDO MI RGISTRO MAS FACIL ya que tengo mi observer creado
 
 
         //aqui estoy es para implementar un banner pra que aparesca cuando se guarde el registro
