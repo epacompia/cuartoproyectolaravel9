@@ -19,6 +19,10 @@
 
     <!-- Styles -->
     @livewireStyles
+
+
+    @stack('css')
+
 </head>
 
 
@@ -84,6 +88,9 @@
     @stack('modals')
 
     @livewireScripts
+
+
+    @stack('js')
 </body>
 
 </html>

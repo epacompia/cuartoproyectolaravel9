@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -97,7 +98,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories=Category::all();
-        return view('admin.posts.edit', compact('post','categories'));
+        $tags=Tag::all();
+
+        return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -110,6 +113,28 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
 
+        return $request->all();
+
+        $request->validate(
+            [
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:posts,slug,' . $post->id,
+                'category_id' => 'required|integer|exists:categories,id',
+                'summary' => 'required|string',
+                'content' => 'required|string',
+            ]
+        );
+
+        //SINCRONIZA LOS VALORES PARA EL TAGS
+        $post->tags()->sync($request->tags);
+
+        $post->update($request->all());
+
+        //aqui estoy es para implementar un banner pra que aparesca cuando se guarde el registro
+        session()->flash('flash.banner', 'El Post se ha actualizado con exito');
+        session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->route('admin.posts.edit',$post);
     }
 
     /**
