@@ -52,8 +52,12 @@
                 Etiquetas
             </x-label>
             <select class="js-example-basic-multiple w-full" name="tags[]" multiple="multiple">
-                @foreach ($tags as $tag )
-                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                {{-- @foreach ($tags as $tag )
+                    <option value="{{$tag->id}}"  @selected($post->tags->contains($tag))>{{$tag->name}}</option>
+                @endforeach --}}
+
+                @foreach ($post->tags as $tag)
+                    <option value="{{$tag->name}}" selected>{{$tag->name}}</option>
                 @endforeach
             </select>
 
@@ -110,9 +114,28 @@
         } );
 
 
-
+        //AJAX PARA MOSTRAR LAS ETIQUETAS
         $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
+        $('.js-example-basic-multiple').select2({
+            tags: true,
+            tokenSeparators: [',',''],
+            ajax:{
+                url:"{{route('tags.select2')}}",
+                dataType:'json',
+                delay:250,
+                data: function(params){
+                    return {
+                        term: params.term
+                    }
+                },
+
+                processResults: function(data){
+                    return {
+                        results: data
+                    }
+                },
+            }
+        });
         });
 
     </script>

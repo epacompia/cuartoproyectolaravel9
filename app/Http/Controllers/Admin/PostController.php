@@ -98,9 +98,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories=Category::all();
-        $tags=Tag::all();
+        //$tags=Tag::all();
 
-        return view('admin.posts.edit', compact('post','categories','tags'));
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -113,7 +113,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
 
-        return $request->all();
+        //return $request->all();
 
         $request->validate(
             [
@@ -125,8 +125,25 @@ class PostController extends Controller
             ]
         );
 
+
+        $tags=[]; //aqui buscamos las etiquetas y lo recuperamos
+
+        //analizando si el tag ingresado manualmente esta en la base de datos sino hay que agregarlo a la bd
+        foreach ($request->tags as $name) {
+
+            $tag=Tag::firstOrCreate(['name' => $name]);
+            $tags[]=$tag->id;
+            // $tag = Tag::where('name', $name)->first();
+            // if(!$tag){
+            //     $tag = Tag::create([
+            //         'name' => $name,
+
+            //     ]);
+            // }
+            // $tags[]=$tag->id;
+        }
         //SINCRONIZA LOS VALORES PARA EL TAGS
-        $post->tags()->sync($request->tags);
+        $post->tags()->sync($tags);
 
         $post->update($request->all());
 
