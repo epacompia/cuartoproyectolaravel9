@@ -120,16 +120,19 @@ class PostController extends Controller
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|max:255|unique:posts,slug,' . $post->id,
                 'category_id' => 'required|integer|exists:categories,id',
-                'summary' => 'required|string',
-                'content' => 'required|string',
+                // 'summary' => 'required|string',
+                // 'content' => 'required|string',
+                'is_published' => 'required|boolean',
             ]
         );
+
+        //return $request->all();
 
 
         $tags=[]; //aqui buscamos las etiquetas y lo recuperamos
 
         //analizando si el tag ingresado manualmente esta en la base de datos sino hay que agregarlo a la bd
-        foreach ($request->tags as $name) {
+        foreach ($request->tags ?? [] as $name) {
 
             $tag=Tag::firstOrCreate(['name' => $name]);
             $tags[]=$tag->id;
