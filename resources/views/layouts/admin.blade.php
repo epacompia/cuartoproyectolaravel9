@@ -16,7 +16,7 @@
     <script src="https://kit.fontawesome.com/efe1bdfe15.js" crossorigin="anonymous"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <!-- COMENTARIO DE RPEUBA -->
     <!-- Styles -->
     @livewireStyles
 
